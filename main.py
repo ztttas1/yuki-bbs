@@ -68,6 +68,11 @@ def view_bbs(request: Request,name: Union[str, None] = "",seed:Union[str,None]="
     res = HTMLResponse(requests.get(fr"{url}bbs?name={urllib.parse.quote(name)}&seed={urllib.parse.quote(seed)}&channel={urllib.parse.quote(channel)}&verify={urllib.parse.quote(verify)}",cookies={"yuki":"True"}).text)
     return res
 
+@app.get("/bbs/info",response_class=HTMLResponse)
+def view_bbs(request: Request,name: Union[str, None] = "",seed:Union[str,None]="",channel:Union[str,None]="main",verify:Union[str,None]="false",yuki: Union[str] = Cookie(None)):
+    res = HTMLResponse(requests.get(fr"{url}bbs/info").text)
+    return res
+
 @cache(seconds=5)
 def bbsapi_cached(verify,channel):
     return requests.get(fr"{url}bbs/api?t={urllib.parse.quote(str(int(time.time()*1000)))}&verify={urllib.parse.quote(verify)}&channel={urllib.parse.quote(channel)}",cookies={"yuki":"True"}).text
