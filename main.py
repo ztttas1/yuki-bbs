@@ -63,7 +63,7 @@ def home(response: Response,request: Request,yuki: Union[str] = Cookie(None)):
     return redirect("/bbs")
 
 
-@app.get("bbs/",response_class=HTMLResponse)
+@app.get("/bbs",response_class=HTMLResponse)
 def view_bbs(request: Request,name: Union[str, None] = "",seed:Union[str,None]="",channel:Union[str,None]="main",verify:Union[str,None]="false",yuki: Union[str] = Cookie(None)):
     res = HTMLResponse(requests.get(fr"{url}bbs?name={urllib.parse.quote(name)}&seed={urllib.parse.quote(seed)}&channel={urllib.parse.quote(channel)}&verify={urllib.parse.quote(verify)}",cookies={"yuki":"True"}).text)
     return res
