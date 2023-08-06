@@ -60,7 +60,7 @@ template = Jinja2Templates(directory='templates').TemplateResponse
 
 @app.get("/", response_class=HTMLResponse)
 def home(response: Response,request: Request,yuki: Union[str] = Cookie(None)):
-    return redirect("/word")
+    return redirect("/bbs")
 
 
 @app.get("bbs/",response_class=HTMLResponse)
