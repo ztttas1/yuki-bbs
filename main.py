@@ -15,14 +15,6 @@ version = "1.0"
 
 
 
-def is_json(json_str):
-    result = False
-    try:
-        json.loads(json_str)
-        result = True
-    except json.JSONDecodeError as jde:
-        pass
-    return result
 
 
 def get_info(request):
@@ -93,7 +85,7 @@ def write_bbs(request: Request,name: str = "",message: str = "",seed:Union[str,N
 def how_cached():
     return requests.get(fr"{url}bbs/how").text
 
-@app.get("/bbs/how",response_class=HTMLResponse)
+@app.get("/bbs/how",response_class=PlainTextResponse)
 def view_commonds(request: Request,yuki: Union[str] = Cookie(None)):
     return how_cached()
 
