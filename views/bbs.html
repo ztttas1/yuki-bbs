@@ -2,13 +2,6 @@
 <html>
   <head>
     <title>連番を簡単に生成！！</title>
-    <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
-    <script>
-      function addDarkmodeWidget() {
-        new Darkmode().showWidget();
-      }
-      window.addEventListener("load", addDarkmodeWidget);
-    </script>
 
     <style>
       .example4 {
@@ -33,10 +26,28 @@
           background-position: 200%;
         }
       }
+
+      .dark {
+        background-color: #111;
+        color: #ddd;
+      }
+
+      .dark input,
+      .dark textarea,
+      .dark button,
+      .dark select {
+        background-color: #111;
+        color: #ddd;
+        border: #ddd 1px solid;
+      }
+
+      .dark a {
+        color: cyan;
+      }
     </style>
   </head>
   <body>
-    <a href="/">Yuki Youtube</a>
+    <button id="darkmodeBtn">ダークモードきりかえ</button>
     <div class="example4"><h1>掲示板</h1></div>
     新規さんへ、先ずは挨拶をしましょう。シード値は自分のidを決めるものでパスワードのようなものです。<br />今の話題に勇気を出して参加してみましょう！！！<br />
     メッセージが送れない場合メッセージや名前が規制されている可能性があります。<br />
@@ -59,7 +70,14 @@
       ></textarea>
       <p></p>
       <label for="name">名前</label>
-      <input type="text" id="name" name="name" value="" maxlength="25" required />
+      <input
+        type="text"
+        id="name"
+        name="name"
+        value=""
+        maxlength="25"
+        required
+      />
       <label for="seed">シード</label>
       <input type="text" id="seed" name="seed" value="" required />
       <button type="submit" id="submit">送信する</button>
@@ -78,17 +96,24 @@
       let msg = document.getElementById("msg");
       let nam = document.getElementById("name");
       let seed = document.getElementById("seed");
-      let form = document.getElementById("form")
+      let form = document.getElementById("form");
       let element = document.getElementById("filter");
       let channel = document.getElementById("channel");
+      let body = document.querySelector("body");
+      let darkmodeBtn = document.getElementById("darkmodeBtn");
 
       nam.value = localStorage.getItem("name");
       seed.value = localStorage.getItem("seed");
 
+      if (localStorage.hasOwnProperty("dark")) {
+        localStorage.setItem("dark", 0);
+      }
+      dark = localStorage.getItem("dark");
+
       form.addEventListener("submit", () => {
         localStorage.setItem("name", nam.value);
         localStorage.setItem("seed", seed.value);
-        console.log("clicked")
+        console.log("clicked");
       });
 
       function AutoLink(str) {
@@ -100,8 +125,6 @@
         return str.replace(regexp_url, regexp_makeLink);
       }
 
-      
-      
       function reloadmessages() {
         var xhr = new XMLHttpRequest();
         xhr.open(
@@ -122,11 +145,25 @@
         };
         xhr.send();
       }
-      
+
       reloadmessages();
       setTimeout(reloadmessages, 1000);
       setInterval(reloadmessages, 5000);
-      
+
+      darkmodeBtn.addEventListener("click", () => {
+        if (dark == 1){
+          localStorage.setItem("dark", 0);
+          dark = 0;
+        } else {
+          localStorage.setItem("dark", 1);
+          dark = 1;
+        }
+        body.classList.toggle("dark");
+      });
+
+      if (dark == 1){
+        body.classList.toggle("dark");
+      }
     </script>
   </body>
 </html>
