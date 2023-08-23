@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: yuki-bbs
+    name: yuki-bbs_1
     env: python
     region: Oregon
     plan: free
